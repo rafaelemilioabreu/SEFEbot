@@ -25,7 +25,9 @@ bot.start((ctx)=>{
 bot.help((ctx)=>{
     ctx.reply(`Los comandos habilitados por el momento son:
     1. Llamar a todos: 
-    /everyone, /all, /venganto, /toElMundazo, /lista, /toelmundo    
+    /everyone, /all, /venganto, /toElMundazo, /lista, /toelmundo.
+    2. Horario:
+    /Clases, /Horario, /clasesNormales. 
     `);
 })
 
@@ -36,7 +38,7 @@ bot.command(['everyone', 'Everyone', 'All', 'ALL', 'all', 'toElMundazo', 'toelmu
 });
 
 //Escuchar evento
-bot.command('clasesNormales',ctx => {
+bot.command(['clasesNormales','clases', 'CLASES', 'Clases', 'Horario','horario','HORARIO'],ctx => {
     ctx.reply(`El horario es: 
     Lunes: Desarrollo Emprendedores. (7-9pm),
     Martes: Programación Paralela. (8-10pm),
