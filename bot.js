@@ -69,7 +69,6 @@ bot.command("links", ctx => {
 
 bot.command(["Insulto","INSULTO","insulto"], ctx => {
     let valor = getRandomArbitrary(0,1);
-    console.log(valor);
     if(valor >= 0.5){
         conseguirInsultoEs(ctx);
     }else{
