@@ -1,6 +1,6 @@
 //Importamos telegraf
 const { Telegraf } = require('telegraf');
-
+const axios = require('axios');
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 
@@ -66,6 +66,31 @@ bot.command("links", ctx => {
         }
     })
 })
+
+bot.command(["Insulto","INSULTO","insulto"], ctx => {
+    let valor = getRandomArbitrary(0,1);
+    console.log(valor);
+    if(valor >= 0.5){
+        conseguirInsultoEs(ctx);
+    }else{
+        conseguirInsultoEn(ctx);
+    }
+    
+})
+
+
+conseguirInsultoEs = (ctx)=>{
+    axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
+    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+}
+conseguirInsultoEn = (ctx)=>{
+    axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
+    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.random();
+  }
 
 //Eventos con on
 // bot.on('text',ctx=>{
