@@ -69,8 +69,13 @@ bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario
     `)
 });
 
-bot.command("DiseloTuBot", ctx => {
-    ctx.reply("Te la bebiste Eduardo");
+bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT"], ctx => {
+    if(ctx.message.reply_to_message){
+        ctx.reply(`Te la bebiste ${ctx.message.reply_to_message.from.first_name}`);
+    }else{
+        ctx.reply("Se la bebieron toito");
+    }
+    
 })
 bot.command(["linkParalela", "LinkParalela", "linkparalela", "LINKPARALELA", "Linkparalela"], ctx => {
     ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
@@ -100,20 +105,39 @@ bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
 
 })
 
+bot.command("pin", ctx=>{
+    try{
+        ctx.pinChatMessage(ctx.message.reply_to_message.message_id);
+    }catch(error){
+        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA PINEARLO");
+    }
+    
+})
+
+bot.command("unpin", ctx=>{
+    try{
+        ctx.unpinChatMessage(ctx.message.reply_to_message.message_id);
+    }catch(error){
+        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA UNPINEARLO");
+    }
+})
 bot.command(["Cumplido", "CUMPLIDO", "cumplido"], ctx => {
 
     conseguirCumplido(ctx);
 
 })
 
-
-bot.command(["ban", "BAN", "Ban", "sacar", "Sacar"], ctx => {
-    (async () => {
-        await bot.sendMessage(ctx.message.chat.id, say(ctx.value), options(ctx.message));
-    })();
+// ban member from group
+bot.command(['kick','ban','palloby','pafuera'], ctx => {
+    ctx.getChatMember(ctx.message.from.id).then(res => {
+        if (res.status == 'creator' || res.status == 'administrator') {
+            kick(ctx);
+        }
+        else {
+            ctx.reply('Te falta calle')
+        }
+    });
 })
-
-
 //<----##################################################################        FUNCIONES            ###############################################################---->
 conseguirInsultoEs = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
@@ -131,18 +155,6 @@ conseguirInsultoEn = (ctx) => {
 function getRandomArbitrary() {
     return Math.random();
 }
-
-// ban member from group
-bot.command('kick', ctx => {
-    ctx.getChatMember(ctx.message.from.id).then(res => {
-        if (res.status == 'creator' || res.status == 'administrator') {
-            kick(ctx);
-        }
-        else {
-            ctx.reply('Te falta calle')
-        }
-    });
-})
 
 async function kick(ctx) {
     let conteo;
