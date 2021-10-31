@@ -14,9 +14,9 @@ bot.start((ctx) => {
         ctx.reply("Llego la para, llego la grasa");
     } else if (ctx.from.first_name == "Dereck") {
         ctx.reply("Bienvenido mi lider supremo");
-    } else if (ctx.from.first_name == "Marlon"){
+    } else if (ctx.from.first_name == "Marlon") {
         ctx.reply
-                 (`SE ACEPTAN TRANSFERENCIAS,
+            (`SE ACEPTAN TRANSFERENCIAS,
             
     Cédula: 402-0961415-1 Marlon Villalona
 
@@ -37,7 +37,7 @@ bot.start((ctx) => {
 
     Binance Pay ID: 287625501`)
     }
-     else {
+    else {
         ctx.reply(`Bienvenido ${ctx.from.first_name} ${ctx.from.last_name}`);
     }
 });
@@ -90,64 +90,70 @@ bot.command("links", ctx => {
     })
 })
 
-bot.command(["Insulto","INSULTO","insulto"], ctx => {
-    let valor = getRandomArbitrary();
-    if(valor >= 0.5){
+bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
+    let valor = getRandomArbitrary(0, 1);
+    if (valor >= 0.5) {
         conseguirInsultoEs(ctx);
-    }else{
+    } else {
         conseguirInsultoEn(ctx);
     }
-    
+
 })
 
-bot.command(["Cumplido","CUMPLIDO","cumplido"], ctx => {
-    
+bot.command(["Cumplido", "CUMPLIDO", "cumplido"], ctx => {
+
     conseguirCumplido(ctx);
-   
-})       
-    
-    
-bot.command(["ban", "BAN","Ban", "sacar","Sacar"], ctx=>{
+
+})
+
+
+bot.command(["ban", "BAN", "Ban", "sacar", "Sacar"], ctx => {
     (async () => {
-		await bot.sendMessage(ctx.message.chat.id, say(ctx.value), options(ctx.message));
-	})();
+        await bot.sendMessage(ctx.message.chat.id, say(ctx.value), options(ctx.message));
+    })();
 })
 
 
 //<----##################################################################        FUNCIONES            ###############################################################---->
-conseguirInsultoEs = (ctx)=>{
+conseguirInsultoEs = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
-    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
-conseguirCumplido = (ctx)=>{
+conseguirCumplido = (ctx) => {
     axios.get("https://complimentr.com/api")
-    .then(res => ctx.reply(res.data.compliment))
+        .then(res => ctx.reply(res.data.compliment))
 }
-conseguirInsultoEn = (ctx)=>{
+conseguirInsultoEn = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
-    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
 //Numero random, XD.
 function getRandomArbitrary() {
     return Math.random();
-  }
+}
 
+// ban member from group
+bot.command('kick', ctx => {
+    ctx.getChatMember(ctx.message.from.id).then(res => {
+        console.log({ res });
+        if (res.status == 'creator' || res.status == 'administrator') {
+            kick(ctx);
+        }
+        else {
+            ctx.reply('Te falta calle')
+        }
+    });
+})
 
-  async function ban(bot, message, value) {
-	const user = await bot.getChatMember(message.chat.id, message.from.id);
-	if(message.reply_to_message == undefined){
-		return;
-	}
-	if((user.status == 'creator') || (user.status == 'administrator')){
-		try{
-		bot.kickChatMember(message.chat.id, message.reply_to_message.from.id, {until_date : Math.round((Date.now() + ms(value[1] + " days"))/1000)});
-			bot.deleteMessage(message.chat.id, message.message_id);
-			bot.sendMessage(message.chat.id, `El usuario ${message.reply_to_message.from.username === undefined ? message.reply_to_message.from.first_name : '@'+message.reply_to_message.from.username} ha sido baneado durante: *${value[1]} dias.*`,options(message));
-		}catch{bot.sendMessage(message.chat.id, `No he podido banear al usuario.`, options(message));}
-	}else{
-		bot.sendMessage(message.chat.id, "No eres administrador.");
-	}
-};
+async function kick(ctx) {
+    let conteo;
+    await ctx.reply('Usted se la acaba de beber');
+    for (let i = 3; i > 0; i--) {
+        conteo = i;
+        await ctx.reply(`${conteo}`);
+    }
+    await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
+}
 
 
 //Ejecuta el bot
