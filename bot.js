@@ -77,10 +77,23 @@ bot.command(["Insulto","INSULTO","insulto"], ctx => {
     
 })
 
+bot.command(["Cumplido","CUMPLIDO","cumplido"], ctx => {
+    
+    conseguirCumplido(ctx);
+   
+        
+    
+    
+})
+
 
 conseguirInsultoEs = (ctx)=>{
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
     .then(res => ctx.reply(res.data.insult.toUpperCase()))
+}
+conseguirCumplido = (ctx)=>{
+    axios.get("https://complimentr.com/api")
+    .then(res => ctx.reply(res.data.compliment))
 }
 conseguirInsultoEn = (ctx)=>{
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
