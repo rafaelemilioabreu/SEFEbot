@@ -16,26 +16,26 @@ bot.start((ctx) => {
         ctx.reply("Bienvenido mi lider supremo");
     } else if (ctx.from.first_name == "Marlon"){
         ctx.reply
-        ("SE ACEPTAN TRANSFERENCIAS",
+                 (`SE ACEPTAN TRANSFERENCIAS,
             
-        "Cédula: 402-0961415-1 Marlon Villalona",
+    Cédula: 402-0961415-1 Marlon Villalona
 
-        "Banco: Asociación Popular de Ahorros y Préstamos",
-        "Cuenta de ahorros: 1023880512",
+    Banco: Asociación Popular de Ahorros y Préstamos
+    Cuenta de ahorros: 1023880512
 
-        "-------------------------------------------",
+    -------------------------------------------
 
-        "Banco: Popular",
-        "Cuenta corriente: 823359237",
+    Banco: Popular
+    Cuenta corriente: 823359237
 
-         "----------------------------------------",
+    ----------------------------------------
 
-         "Banco: Promerica Cuenta de ahorros: 11910200002107",
+    Banco: Promerica 
+    Cuenta de ahorros: 11910200002107
 
-         "----------------------------------------",
+    ----------------------------------------
 
-
-         "Binance Pay ID: 287625501")
+    Binance Pay ID: 287625501`)
     }
      else {
         ctx.reply(`Bienvenido ${ctx.from.first_name} ${ctx.from.last_name}`);
