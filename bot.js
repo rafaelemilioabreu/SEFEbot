@@ -14,7 +14,30 @@ bot.start((ctx) => {
         ctx.reply("Llego la para, llego la grasa");
     } else if (ctx.from.first_name == "Dereck") {
         ctx.reply("Bienvenido mi lider supremo");
-    } else {
+    } else if (ctx.from.first_name == "Marlon"){
+        ctx.reply
+        ("SE ACEPTAN TRANSFERENCIAS",
+            
+        "Cédula: 402-0961415-1 Marlon Villalona",
+
+        "Banco: Asociación Popular de Ahorros y Préstamos",
+        "Cuenta de ahorros: 1023880512",
+
+        "-------------------------------------------",
+
+        "Banco: Popular",
+        "Cuenta corriente: 823359237",
+
+         "----------------------------------------",
+
+         "Banco: Promerica Cuenta de ahorros: 11910200002107",
+
+         "----------------------------------------",
+
+
+         "Binance Pay ID: 287625501")
+    }
+     else {
         ctx.reply(`Bienvenido ${ctx.from.first_name} ${ctx.from.last_name}`);
     }
 });
