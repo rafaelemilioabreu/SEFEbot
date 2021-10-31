@@ -135,7 +135,6 @@ function getRandomArbitrary() {
 // ban member from group
 bot.command('kick', ctx => {
     ctx.getChatMember(ctx.message.from.id).then(res => {
-        console.log({ res });
         if (res.status == 'creator' || res.status == 'administrator') {
             kick(ctx);
         }
@@ -152,7 +151,12 @@ async function kick(ctx) {
         conteo = i;
         await ctx.reply(`${conteo}`);
     }
-    await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
+    try{
+        await ctx.kickChatMember(ctx.message.reply_to_message.from.id)
+    }catch(error){
+        ctx.reply("ERROR");
+    }
+    
 }
 
 
