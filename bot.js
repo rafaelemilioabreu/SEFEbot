@@ -67,39 +67,60 @@ bot.command("links", ctx => {
     })
 })
 
-bot.command(["Insulto","INSULTO","insulto"], ctx => {
-    let valor = getRandomArbitrary(0,1);
-    if(valor >= 0.5){
+bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
+    let valor = getRandomArbitrary(0, 1);
+    if (valor >= 0.5) {
         conseguirInsultoEs(ctx);
-    }else{
+    } else {
         conseguirInsultoEn(ctx);
     }
-    
+
 })
 
 
-conseguirInsultoEs = (ctx)=>{
+conseguirInsultoEs = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
-    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
-conseguirInsultoEn = (ctx)=>{
+conseguirInsultoEn = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
-    .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
 
 function getRandomArbitrary(min, max) {
     return Math.random();
-  }
+}
 
 //Eventos con on
-// bot.on('text',ctx=>{
-//     ctx.reply('Texteando');
+
+// bot.on('text', ctx => {
+
 // })
 
 
-//Escuchar sticker
-// bot.on('sticker', ctx => {
-//     ctx.reply('Cuidao con losetikel');
-// })
+// ban member from group
+bot.command('kick', ctx => {
+    ctx.getChatMember(ctx.message.from.id).then(res => {
+        console.log({ res });
+        if (res.status == 'creator' || res.status == 'administrator') {
+            kick(ctx);
+        }
+        else {
+            ctx.reply('Te falta calle')
+        }
+    });
+})
+
+async function kick(ctx) {
+    let conteo;
+    await ctx.reply('Usted se la acaba de beber');
+    for (let i = 3; i > 0; i--) {
+        conteo = i;
+        await ctx.reply(`${conteo}`);
+    }
+    await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
+}
+
+
 //Ejecuta el bot
 bot.launch();
