@@ -7,7 +7,7 @@ const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 //Instanciamos la clase Telegraf que recibe nuestro Token como parámetro
 const bot = new Telegraf(Token);
 
-
+//<----##################################################################        COMANDOS            ###############################################################---->
 //Cuando el bot inicie, lance mensaje de bienvenido
 bot.start((ctx) => {
     if (ctx.from.first_name == "Lisandro") {
@@ -68,7 +68,7 @@ bot.command("links", ctx => {
 })
 
 bot.command(["Insulto","INSULTO","insulto"], ctx => {
-    let valor = getRandomArbitrary(0,1);
+    let valor = getRandomArbitrary();
     if(valor >= 0.5){
         conseguirInsultoEs(ctx);
     }else{
@@ -84,9 +84,14 @@ bot.command(["Cumplido","CUMPLIDO","cumplido"], ctx => {
         
     
     
+bot.command(["ban", "BAN","Ban", "sacar","Sacar"], ctx=>{
+    (async () => {
+		await bot.sendMessage(ctx.message.chat.id, say(ctx.value), options(ctx.message));
+	})();
 })
 
 
+//<----##################################################################        FUNCIONES            ###############################################################---->
 conseguirInsultoEs = (ctx)=>{
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
     .then(res => ctx.reply(res.data.insult.toUpperCase()))
@@ -99,10 +104,27 @@ conseguirInsultoEn = (ctx)=>{
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
     .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
-
-function getRandomArbitrary(min, max) {
+//Numero random, XD.
+function getRandomArbitrary() {
     return Math.random();
   }
+
+
+  async function ban(bot, message, value) {
+	const user = await bot.getChatMember(message.chat.id, message.from.id);
+	if(message.reply_to_message == undefined){
+		return;
+	}
+	if((user.status == 'creator') || (user.status == 'administrator')){
+		try{
+		bot.kickChatMember(message.chat.id, message.reply_to_message.from.id, {until_date : Math.round((Date.now() + ms(value[1] + " days"))/1000)});
+			bot.deleteMessage(message.chat.id, message.message_id);
+			bot.sendMessage(message.chat.id, `El usuario ${message.reply_to_message.from.username === undefined ? message.reply_to_message.from.first_name : '@'+message.reply_to_message.from.username} ha sido baneado durante: *${value[1]} dias.*`,options(message));
+		}catch{bot.sendMessage(message.chat.id, `No he podido banear al usuario.`, options(message));}
+	}else{
+		bot.sendMessage(message.chat.id, "No eres administrador.");
+	}
+};
 
 //Eventos con on
 // bot.on('text',ctx=>{
