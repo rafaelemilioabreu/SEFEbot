@@ -8,7 +8,9 @@ const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 const bot = new Telegraf(Token);
 
 //<----##################################################################        COMANDOS            ###############################################################---->
-//Cuando el bot inicie, lance mensaje de bienvenido
+
+
+//Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
     if (ctx.from.first_name == "Lisandro") {
         ctx.reply("Llego la para, llego la grasa");
@@ -43,7 +45,7 @@ bot.start((ctx) => {
 });
 
 
-//Comando help
+//Throws a message with the command list
 bot.help((ctx) => {
     ctx.reply(`Los comandos habilitados por el momento son: 
 1. Llamar a todos: 
@@ -53,13 +55,12 @@ bot.help((ctx) => {
 `);
 })
 
-
-//Crea comando nuevo (nombres, funcion)
+//Mention all the people in the group
 bot.command(['everyone', 'Everyone', 'All', 'ALL', 'all', 'toElMundazo', 'toelmundo', 'venganTo', 'VenganTo', 'venganto', 'VENGANTO', 'LISTA', 'lista', 'Lista'], (ctx) => {
     ctx.reply(`Vengan to' mmñ @RafaelEmilioAbreu @dereckhidalgo @Lisandro6 @iamvilllalona @Pieritax @JenrryMonegro @Etiwal @BinanceFuturo`);
 });
 
-//Escuchar evento
+//throws the schedule
 bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario', 'HORARIO'], ctx => {
     ctx.reply(`El horario es: 
     Lunes: Desarrollo Emprendedores. (7-9pm),
@@ -69,6 +70,7 @@ bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario
     `)
 });
 
+//throws a message: "Te la bebiste" + the name of the person you replied to.
 bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT"], ctx => {
     if(ctx.message.reply_to_message){
         ctx.reply(`Te la bebiste ${ctx.message.reply_to_message.from.first_name}`);
@@ -77,14 +79,18 @@ bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT"], ctx => {
     }
     
 })
+
+////gets the Parallel programming link
 bot.command(["linkParalela", "LinkParalela", "linkparalela", "LINKPARALELA", "Linkparalela"], ctx => {
     ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
 })
+
+//gets the Software Engineering link
 bot.command(["linkIngenieria", "LinkIngenieria", "linkingenieria", "LINKINGENIERIA", "linkEvanyeline", "LinkEvanyeline", "linkevanyeline", "LINKEVANYELINE", "linkevangelion", "linkEvangelion", "LinkEvangelion"], ctx => {
     ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
 })
 
-
+//It's supossed to be, a menu with the links of the classes 
 bot.command("links", ctx => {
     ctx.telegram.sendMessage(ctx.chat.id, 'Estos son los diferentes links para sus clases: \n ¿Cuál desea obtener?', {
         reply_markup: {
@@ -95,6 +101,8 @@ bot.command("links", ctx => {
     })
 })
 
+
+//This command get a insult, use conseguirInsultoEs and ConseguirInsultoEn functions.
 bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
     let valor = getRandomArbitrary(0, 1);
     if (valor >= 0.5) {
@@ -105,6 +113,7 @@ bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
 
 })
 
+//Pin a message with a reply in the target
 bot.command("pin", ctx=>{
     try{
         ctx.pinChatMessage(ctx.message.reply_to_message.message_id);
@@ -114,6 +123,7 @@ bot.command("pin", ctx=>{
     
 })
 
+//Unpin a message with a reply in the target
 bot.command("unpin", ctx=>{
     try{
         ctx.unpinChatMessage(ctx.message.reply_to_message.message_id);
@@ -121,13 +131,13 @@ bot.command("unpin", ctx=>{
         ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA UNPINEARLO");
     }
 })
+
+//This command get  a compliment, use conseguirCumplido function.
 bot.command(["Cumplido", "CUMPLIDO", "cumplido"], ctx => {
-
     conseguirCumplido(ctx);
-
 })
 
-// ban member from group
+// This command ban  a member from group, use de kick function.
 bot.command(['kick','ban','palloby','pafuera'], ctx => {
     ctx.getChatMember(ctx.message.from.id).then(res => {
         if (res.status == 'creator' || res.status == 'administrator') {
@@ -138,24 +148,37 @@ bot.command(['kick','ban','palloby','pafuera'], ctx => {
         }
     });
 })
+
+
+
 //<----##################################################################        FUNCIONES            ###############################################################---->
+
+//This one, get de Insult from an api in Spanish
 conseguirInsultoEs = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
         .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
+
+//This one, get a compliment from an api in English.
 conseguirCumplido = (ctx) => {
     axios.get("https://complimentr.com/api")
         .then(res => ctx.reply(res.data.compliment))
 }
+
+//This one, get de Insult from an api in English
 conseguirInsultoEn = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
         .then(res => ctx.reply(res.data.insult.toUpperCase()))
 }
-//Numero random, XD.
+
+
+//This function get a number between 0 and 1.
 function getRandomArbitrary() {
     return Math.random();
 }
 
+
+//With this function we can ban a member from the group.
 async function kick(ctx) {
     let conteo;
     await ctx.reply('Usted se la acaba de beber');
@@ -172,5 +195,5 @@ async function kick(ctx) {
 }
 
 
-//Ejecuta el bot
+//launc the bot
 bot.launch();
