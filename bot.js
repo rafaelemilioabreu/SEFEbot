@@ -104,7 +104,7 @@ bot.command(["Cumplido","CUMPLIDO","cumplido"], ctx => {
     
     conseguirCumplido(ctx);
    
-        
+})       
     
     
 bot.command(["ban", "BAN","Ban", "sacar","Sacar"], ctx=>{
@@ -149,15 +149,6 @@ function getRandomArbitrary() {
 	}
 };
 
-//Eventos con on
-// bot.on('text',ctx=>{
-//     ctx.reply('Texteando');
-// })
 
-
-//Escuchar sticker
-// bot.on('sticker', ctx => {
-//     ctx.reply('Cuidao con losetikel');
-// })
 //Ejecuta el bot
 bot.launch();
