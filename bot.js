@@ -164,12 +164,14 @@ bot.command(['kick','ban','palloby','pafuera'], ctx => {
 conseguirInsultoEs = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
         .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .catch(err => console.log(err));
 }
 
 //This one, get a compliment from an api in English.
 conseguirCumplido = (ctx) => {
     axios.get("https://complimentr.com/api")
         .then(res => ctx.reply(res.data.compliment))
+        .catch(err => console.log(err));
 }
 
 //This one, get a bad joke
@@ -182,6 +184,7 @@ conseguirChiste = (ctx) => {
 conseguirInsultoEn = (ctx) => {
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
         .then(res => ctx.reply(res.data.insult.toUpperCase()))
+        .catch(err => console.log(err));
 }
 
 
@@ -212,7 +215,7 @@ let quote = null;
 setInterval(() => {
 	 quote = quotes[Object.keys(quotes)[Math.floor(Math.random()*Object.keys(quotes).length)]];
 	bot.telegram.sendMessage(-1001325613452, `“*${quote.text}*” - ${quote.author}`, {parse_mode: "Markdown"});
-}, 1000 * (3600 * 6)); 
+}, 1000 * (3600 * 4)); 
 
 //launc the bot
 bot.launch();
