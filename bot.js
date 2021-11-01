@@ -139,6 +139,11 @@ bot.command(["Cumplido", "CUMPLIDO", "cumplido"], ctx => {
     conseguirCumplido(ctx);
 })
 
+//This command get  a bad joke, use conseguirChiste function.
+bot.command(["Chiste", "CHISTE", "chiste"], ctx => {
+    conseguirChiste(ctx);
+})
+
 // This command ban  a member from group, use de kick function.
 bot.command(['kick','ban','palloby','pafuera'], ctx => {
     ctx.getChatMember(ctx.message.from.id).then(res => {
@@ -165,6 +170,12 @@ conseguirInsultoEs = (ctx) => {
 conseguirCumplido = (ctx) => {
     axios.get("https://complimentr.com/api")
         .then(res => ctx.reply(res.data.compliment))
+}
+
+//This one, get a bad joke
+conseguirChiste = (ctx) => {
+    axios.get("https://icanhazdadjoke.com/")
+        .then(res => ctx.reply(res.data.joke))
 }
 
 //This one, get de Insult from an api in English
