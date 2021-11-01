@@ -1,6 +1,8 @@
 //Importamos telegraf
 const { Telegraf } = require('telegraf');
 const axios = require('axios');
+
+const quotes = require('./public/quotes.json');
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 
@@ -194,6 +196,12 @@ async function kick(ctx) {
     
 }
 
+//this function throws a Quote every 6 hours.
+let quote = null;
+setInterval(() => {
+	 quote = quotes[Object.keys(quotes)[Math.floor(Math.random()*Object.keys(quotes).length)]];
+	bot.telegram.sendMessage(-1001325613452, `“*${quote.text}*” - ${quote.author}`, {parse_mode: "Markdown"});
+}, 1000 * (3600 * 6)); 
 
 //launc the bot
 bot.launch();
