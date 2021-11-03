@@ -104,7 +104,7 @@ bot.command("links", ctx => {
 })
 
 
-//This command get a insult, use conseguirInsultoEs and ConseguirInsultoEn functions.
+// This command get a insult, use conseguirInsultoEs and ConseguirInsultoEn functions.
 bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
     let valor = getRandomArbitrary(0, 1);
     if (valor >= 0.5) {
@@ -155,11 +155,19 @@ bot.command(['kick','ban','palloby','pafuera'], ctx => {
         }
     });
 })
-
+//Get heads or tails
 bot.command("flipcoin", ctx =>{
     getFlip(ctx);
 })
 
+//call the got quote
+bot.command("GOT", (ctx)=>{
+    getGOTquote(ctx);
+})
+
+bot.command(["anime","ANIME","otaku","OTAKU"], ctx=>{
+    getAnimequote(ctx);
+})
 //<----##################################################################        FUNCIONES            ###############################################################---->
 
 //This one, get de Insult from an api in Spanish
@@ -235,13 +243,35 @@ async function kick(ctx) {
     }
     
 }
-
+//random quotes from Game Of Thrones
+getGOTquote = async (ctx) =>{
+    const payload = {
+		method : 'GET',
+		url : 'https://game-of-thrones-quotes.herokuapp.com/v1/random'
+	};
+    const info = await axios.request(payload);
+    const {sentence, character} = info.data
+    const {name} = character
+    const Text = `${sentence}\n~${name}`;
+    ctx.reply(Text);    
+}
+//random quotes from anime
+getAnimequote = async (ctx) =>{
+    const payload = {
+		method : 'GET',
+		url : 'https://animechan.vercel.app/api/random'
+	};
+    const info = await axios.request(payload);
+    const {anime,quote, character} = info.data
+    const Text = `"${quote}"\n\n⛩️ ${character} from ${anime} ⛩️`;
+    ctx.reply(Text);    
+}
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {
 	 quote = quotes[Object.keys(quotes)[Math.floor(Math.random()*Object.keys(quotes).length)]];
 	bot.telegram.sendMessage(-1001325613452, `“*${quote.text}*” - ${quote.author}`, {parse_mode: "Markdown"});
-}, 1000 * (3600 * 4)); 
+}, 1000 * (3600 * 2)); 
 
 //launc the bot
 bot.launch();
