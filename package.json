@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "nodemon bot.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC"
