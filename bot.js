@@ -1,8 +1,14 @@
+
+//Permite importar y usar require. Se especifica "type":"module" en el package.json
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 //Importamos telegraf
 const { Telegraf } = require('telegraf');
-const axios = require('axios');
-
 const quotes = require('./public/quotes.json');
+import { conseguirInsultoEs, conseguirInsultoEn, 
+    conseguirCumplido, conseguirChiste, getFlip, 
+    getRandomArbitrary, kick, getGOTquote, getAnimequote } from './public/functions.js';
+
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 
@@ -10,7 +16,6 @@ const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
 const bot = new Telegraf(Token);
 
 //<----##################################################################        COMANDOS            ###############################################################---->
-
 
 //Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
@@ -64,20 +69,32 @@ bot.command(['everyone', 'Everyone', 'All', 'ALL', 'all', 'toElMundazo', 'toelmu
 
 //throws the schedule
 bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario', 'HORARIO'], ctx => {
-    ctx.reply(`El horario es: 
-    Lunes: Desarrollo Emprendedores. (7-9pm),
-    Martes: Programación Paralela. (8-10pm),
-    Miércoles: IoT (6-10pm),
-    Jueves: Ingeniería de Software. (6-8pm)/DevOps (8-10pm),
+    ctx.reply(`
+    \n
+    \n⚜️              Horario de clases              ⚜️
+    \n#############################
+    \n                              Lunes:
+    \n    Desarrollo Emprendedores. (7-9pm)
+    \n#############################
+    \n                             Martes:        
+    \n        Programación Paralela. (8-10pm)
+    \n#############################
+    \n                            Miércoles:    
+    \n                          IoT (6-10pm)
+    \n#############################
+    \n                               Jueves:          
+    \n         Ingeniería de Software. (6-8pm)
+    \n                      DevOps (8-10pm)
+    \n#############################
     `)
 });
 
 //throws a message: "Te la bebiste" + the name of the person you replied to.
-bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT"], ctx => {
+bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT","diselo"], ctx => {
     if(ctx.message.reply_to_message){
-        ctx.reply(`Te la bebiste ${ctx.message.reply_to_message.from.first_name}`);
+        ctx.reply(`Te la bebiste ${ctx.message.reply_to_message.from.first_name}. 😈`);
     }else{
-        ctx.reply("Se la bebieron toito");
+        ctx.reply("Se la bebieron toito. 😈");
     }
     
 })
@@ -120,7 +137,7 @@ bot.command("pin", ctx=>{
     try{
         ctx.pinChatMessage(ctx.message.reply_to_message.message_id);
     }catch(error){
-        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA PINEARLO");
+        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA PINEARLO, ANIMAL. 🤬");
     }
     
 })
@@ -130,7 +147,7 @@ bot.command("unpin", ctx=>{
     try{
         ctx.unpinChatMessage(ctx.message.reply_to_message.message_id);
     }catch(error){
-        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA UNPINEARLO");
+        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA UNPINEARLO, ANIMAL. 🤬");
     }
 })
 
@@ -151,12 +168,12 @@ bot.command(['kick','ban','palloby','pafuera'], ctx => {
             kick(ctx);
         }
         else {
-            ctx.reply('Te falta calle')
+            ctx.reply('Te falta calle 😈')
         }
     });
 })
 //Get heads or tails
-bot.command("flipcoin", ctx =>{
+bot.command(["flipcoin", "coin","flip"], ctx =>{
     getFlip(ctx);
 })
 
@@ -165,107 +182,11 @@ bot.command("GOT", (ctx)=>{
     getGOTquote(ctx);
 })
 
+//throws a quote from a random anime
 bot.command(["anime","ANIME","otaku","OTAKU"], ctx=>{
     getAnimequote(ctx);
 })
-//<----##################################################################        FUNCIONES            ###############################################################---->
 
-//This one, get de Insult from an api in Spanish
-conseguirInsultoEs = (ctx) => {
-    axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
-        .then(res => ctx.reply(res.data.insult.toUpperCase()))
-        .catch(err => console.log(err));
-}
-
-//This one, get a compliment from an api in English.
-conseguirCumplido = (ctx) => {
-    axios.get("https://complimentr.com/api")
-        .then(res => ctx.reply(res.data.compliment))
-        .catch(err => console.log(err));
-}
-
-//This one, get a bad joke
-conseguirChiste = async (ctx) => {
-    const payload = {
-		method : 'GET',
-		url : 'https://dad-jokes.p.rapidapi.com/random/joke/png',
-		headers : {
-			'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
-            'x-rapidapi-host': 'dad-jokes.p.rapidapi.com'
-		}
-	};
-    const info = await axios.request(payload);
-    const {setup, punchline, image} = info.data.body
-    const chisteText = `${setup} \n${punchline}`;
-    ctx.reply(`${setup}\n${punchline}🤡`)
-}
-//throws tails or head, flip a coin.
-getFlip = async (ctx) => {
-    const payload = {
-		method : 'GET',
-		url : 'https://coin-flip1.p.rapidapi.com/headstails',
-		headers : {
-			'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
-            'x-rapidapi-host': 'coin-flip1.p.rapidapi.com'
-		}
-	};
-    const info = await axios.request(payload);
-    const {outcome} = info.data
-    const coinText = `La respuesta es ${outcome=="Heads"?"Cara":"Cruz"}`;
-    ctx.reply(coinText);
-}
-//This one, get de Insult from an api in English
-conseguirInsultoEn = (ctx) => {
-    axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
-        .then(res => ctx.reply(res.data.insult.toUpperCase()))
-        .catch(err => console.log(err));
-}
-
-
-//This function get a number between 0 and 1.
-function getRandomArbitrary() {
-    return Math.random();
-}
-
-
-//With this function we can ban a member from the group.
-async function kick(ctx) {
-    let conteo;
-    await ctx.reply('Usted se la acaba de beber');
-    for (let i = 3; i > 0; i--) {
-        conteo = i;
-        await ctx.reply(`${conteo}`);
-    }
-    try{
-        await ctx.kickChatMember(ctx.message.reply_to_message.from.id)
-    }catch(error){
-        ctx.reply("ERROR");
-    }
-    
-}
-//random quotes from Game Of Thrones
-getGOTquote = async (ctx) =>{
-    const payload = {
-		method : 'GET',
-		url : 'https://game-of-thrones-quotes.herokuapp.com/v1/random'
-	};
-    const info = await axios.request(payload);
-    const {sentence, character} = info.data
-    const {name} = character
-    const Text = `${sentence}\n~${name}`;
-    ctx.reply(Text);    
-}
-//random quotes from anime
-getAnimequote = async (ctx) =>{
-    const payload = {
-		method : 'GET',
-		url : 'https://animechan.vercel.app/api/random'
-	};
-    const info = await axios.request(payload);
-    const {anime,quote, character} = info.data
-    const Text = `"${quote}"\n\n⛩️ ${character} from ${anime} ⛩️`;
-    ctx.reply(Text);    
-}
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {
