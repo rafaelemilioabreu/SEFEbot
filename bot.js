@@ -7,7 +7,7 @@ const { Telegraf } = require('telegraf');
 const quotes = require('./public/quotes.json');
 import { conseguirInsultoEs, conseguirInsultoEn, 
     conseguirCumplido, conseguirChiste, getFlip, 
-    getRandomArbitrary, kick, getGOTquote, getAnimequote } from './public/functions.js';
+    getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage } from './public/functions.js';
 
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
@@ -186,7 +186,10 @@ bot.command("GOT", (ctx)=>{
 bot.command(["anime","ANIME","otaku","OTAKU"], ctx=>{
     getAnimequote(ctx);
 })
-
+//Delete a message, just for admins.
+bot.command(["delete","borrao"], ctx=>{
+    deleteMessage(ctx);
+})
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {

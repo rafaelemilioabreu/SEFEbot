@@ -75,6 +75,23 @@ async function kick(ctx) {
     
 }
 
+//delete message, just for admins.
+const deleteMessage = ctx =>{
+    if(ctx.message.reply_to_message){
+        ctx.getChatMember(ctx.message.from.id).then(res =>{
+            if(res.status =="creator" || res.status =="administrator" || ctx.message.chat.type =="private"){
+                ctx.deleteMessage(ctx.message.reply_to_message.message_id)
+                ctx.deleteMessage(ctx.message.message_id);
+            }else{
+                ctx.reply("Te falta calle 😈");
+            }
+        })
+    }else{
+        ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA ELIMINARLO, ANIMAL. 🤬")
+    }
+    
+}
+
 //random quotes from Game Of Thrones
 const getGOTquote = async (ctx) =>{
     const configuracion = {
@@ -99,4 +116,4 @@ const getAnimequote = async (ctx) =>{
     const Text = `"${quote}"\n\n⛩️ ${character} from ${anime} ⛩️`;
     ctx.reply(Text);    
 }
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote };
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage };
