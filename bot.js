@@ -10,7 +10,8 @@ import {
     conseguirInsultoEs, conseguirInsultoEn,
     conseguirCumplido, conseguirChiste, getFlip,
     getRandomArbitrary, kick, getGOTquote, getAnimequote, 
-    deleteMessage, getCrypto,linkparalela, linkingenieria
+    deleteMessage, getCrypto,linkparalela, linkingenieria,
+    imageSearch
 } from './public/functions.js';
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
@@ -55,6 +56,7 @@ bot.help((ctx) => {
 /flipcoin - dice cara o cruz
 /shiba - muestra precio actual de shiba en USD
 /delete - borra mensaje al que se responda
+/img \`<Texto>\` - devuelve imagen según petición
 `, {
     parse_mode: "Markdown"
 });
@@ -216,6 +218,12 @@ bot.command(["delete", "borrao"], ctx => {
 bot.command(["shiba", "shib"], ctx => {
     getCrypto(ctx);
 })
+
+bot.command(['image','img','search'], ctx=>{
+    imageSearch(ctx);
+    // bot.telegram.sendMessage(ctx.message.chat.id, image);
+})
+
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {

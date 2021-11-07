@@ -127,10 +127,34 @@ const getCrypto = async (ctx) => {
     ctx.reply("El precio de shiba es de: " + usd + "$ 🐐")
 }
 
+//Look an image from the request value
+const imageSearch = async (ctx) =>{
+    let message="Parodiadera memes";
+    let input = ctx.message.text;
+    let inputArray = input.split(" ");
+    if(inputArray.length>1){
+        inputArray.shift();
+        message = inputArray.join(" ");
+    }
+    var options = {
+    method: 'GET',
+    url: 'https://bing-image-search1.p.rapidapi.com/images/search',
+    params: {q: message},
+    headers: {
+        'x-rapidapi-host': 'bing-image-search1.p.rapidapi.com',
+        'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251'
+    }
+    };
+
+    const info =  await axios.request(options);
+    const { contentUrl, name } = info.data.value[0];
+    ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`});
+}
+//Links
 const linkparalela = async (ctx) =>{
     ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
 }
 const linkingenieria = async (ctx) =>{
     ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
 }
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria };
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria, imageSearch };
