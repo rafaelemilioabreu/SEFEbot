@@ -9,7 +9,8 @@ import { datos } from './public/info.js';
 import {
     conseguirInsultoEs, conseguirInsultoEn,
     conseguirCumplido, conseguirChiste, getFlip,
-    getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto
+    getRandomArbitrary, kick, getGOTquote, getAnimequote, 
+    deleteMessage, getCrypto,linkparalela, linkingenieria
 } from './public/functions.js';
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
@@ -36,12 +37,27 @@ bot.command(["Deposito","Cuenta","cuenta","deposita","deposito"], ctx =>{
 
 //Throws a message with the command list
 bot.help((ctx) => {
-    ctx.reply(`Los comandos habilitados por el momento son: 
-1. Llamar a todos: 
-/everyone, /all, /venganto, /toElMundazo, /lista, /toelmundo.
-2. Horario:
-/Clases, /Horario, /clasesNormales. 
-`);
+    ctx.telegram.sendMessage(ctx.chat.id,`SEFEbot Commands:
+/start - muestra mensaje de bienvenida
+/horario - muestra el horario de clases
+/all - menciona a todos los miembros del grupo
+/Cuenta - muestra cuenta del mensajero
+/diselo - muestra mensaje de te la bebiste
+/links - muestra menú con links de las clases
+/insulto - responde con una ofensa
+/cumplido - \`responde\` con un halago
+/pin - destacada un mensaje
+/unpin - quita mensaje de destacado
+/chiste - responde con una broma
+/anime - responde con una frase random de anime
+/GOT - responde con frase random de GOT
+/kick - elimina miembro el cual se le respondió un mensaje
+/flipcoin - dice cara o cruz
+/shiba - muestra precio actual de shiba en USD
+/delete - borra mensaje al que se responda
+`, {
+    parse_mode: "Markdown"
+});
 })
 
 //Mention all the people in the group
@@ -83,27 +99,48 @@ bot.command(["DiseloTuBot", "diselotubot", "DISELOTUBOT", "diselo"], ctx => {
 
 })
 
-////gets the Parallel programming link
-bot.command(["linkParalela", "LinkParalela", "linkparalela", "LINKPARALELA", "Linkparalela"], ctx => {
-    ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
-})
+// ////gets the Parallel programming link
+// bot.command(["linkParalela", "LinkParalela", "linkparalela", "LINKPARALELA", "Linkparalela"], ctx => {
+//     linkparalela(ctx);
+//     ctx.deleteMessage(ctx.message.message_id);
+// })
 
-//gets the Software Engineering link
-bot.command(["linkIngenieria", "LinkIngenieria", "linkingenieria", "LINKINGENIERIA", "linkEvanyeline", "LinkEvanyeline", "linkevanyeline", "LINKEVANYELINE", "linkevangelion", "linkEvangelion", "LinkEvangelion"], ctx => {
-    ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
-})
+// //gets the Software Engineering link
+// bot.command(["linkIngenieria", "LinkIngenieria", "linkingenieria", "LINKINGENIERIA", "linkEvanyeline", "LinkEvanyeline", "linkevanyeline", "LINKEVANYELINE", "linkevangelion", "linkEvangelion", "LinkEvangelion"], ctx => {
+//     linkingenieria(ctx);
+//     ctx.deleteMessage(ctx.message.message_id);
+// })
 
 //It's supossed to be, a menu with the links of the classes 
 bot.command("links", ctx => {
     ctx.telegram.sendMessage(ctx.chat.id, 'Estos son los diferentes links para sus clases: \n ¿Cuál desea obtener?', {
         reply_markup: {
             inline_keyboard: [
-                [{ text: "Programación Paralela", callback_data: "linkParalela" }, { text: "Ingeniería de Software", callback_data: "linkingenieria" }]
+                [{ text: "Programación Paralela", callback_data: "paralela" }, { text: "Ingeniería de Software", callback_data: "ingenieria" }],
+                [{text: "Desarrollo Emp.", callback_data: "desarrollo"},{text:"DevOps",callback_data:"devops"}],
+                [{text:"Volver",callback_data:"volver"}]
             ]
         }
     })
+    ctx.deleteMessage(ctx.message.message_id);
 })
-
+//Define an action for the options
+bot.action('paralela',(ctx) => {
+    ctx.answerCbQuery();
+    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
+    linkparalela(ctx);
+});
+//Define an action for the options
+bot.action('ingenieria',(ctx) => {
+    ctx.answerCbQuery();
+    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
+    linkingenieria(ctx);
+});
+//Define an action for the options
+bot.action('volver',(ctx) => {
+    ctx.answerCbQuery();
+    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
+});
 
 // This command get a insult, use conseguirInsultoEs and ConseguirInsultoEn functions.
 bot.command(["Insulto", "INSULTO", "insulto"], ctx => {

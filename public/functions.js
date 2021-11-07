@@ -127,5 +127,10 @@ const getCrypto = async (ctx) => {
     ctx.reply("El precio de shiba es de: " + usd + "$ 🐐")
 }
 
-
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto };
+const linkparalela = async (ctx) =>{
+    ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
+}
+const linkingenieria = async (ctx) =>{
+    ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
+}
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria };

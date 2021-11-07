@@ -15,6 +15,11 @@ const datos = {
     },
     Ian: {
         Bienvenida: "Saludos patron, le recuerdo que binance va a subir y lo hará millonario",
+        Cuenta: `Ian Emile Alvarez Guzman
+        \nCédula: 402-3122052-2
+        \nBanco: Popular
+        \nCuenta: 823707831
+        \nTipo: Cuenta corriente`
     },
     Pieranyela: {
 
@@ -23,7 +28,19 @@ const datos = {
 
     },
     Marlon: {
-
+        Cuenta: `Marlon Villalona
+        \n Cédula: 402-0961415-1
+        \n___________________________________
+        \nBanco: Asociación Popular de Ahorros y Préstamos
+        \nCuenta de ahorros: 1023880512
+        \n___________________________________
+        \nBanco: Popular
+        \nCuenta corriente: 823359237
+        \n___________________________________
+        \nBanco: Promerica 
+        \nCuenta de ahorros: 11910200002107
+        \n___________________________________
+        \nBinance Pay ID: 287625501`
     },
     Jenrry: {
 
