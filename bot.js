@@ -5,9 +5,11 @@ const require = createRequire(import.meta.url);
 //Importamos telegraf
 const { Telegraf } = require('telegraf');
 const quotes = require('./public/quotes.json');
-import { conseguirInsultoEs, conseguirInsultoEn, 
-    conseguirCumplido, conseguirChiste, getFlip, 
-    getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage } from './public/functions.js';
+import {
+    conseguirInsultoEs, conseguirInsultoEn,
+    conseguirCumplido, conseguirChiste, getFlip,
+    getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto
+} from './public/functions.js';
 
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
@@ -90,13 +92,13 @@ bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario
 });
 
 //throws a message: "Te la bebiste" + the name of the person you replied to.
-bot.command(["DiseloTuBot", "diselotubot","DISELOTUBOT","diselo"], ctx => {
-    if(ctx.message.reply_to_message){
+bot.command(["DiseloTuBot", "diselotubot", "DISELOTUBOT", "diselo"], ctx => {
+    if (ctx.message.reply_to_message) {
         ctx.reply(`Te la bebiste ${ctx.message.reply_to_message.from.first_name}. 😈`);
-    }else{
+    } else {
         ctx.reply("Se la bebieron toito. 😈");
     }
-    
+
 })
 
 ////gets the Parallel programming link
@@ -133,20 +135,20 @@ bot.command(["Insulto", "INSULTO", "insulto"], ctx => {
 })
 
 //Pin a message with a reply in the target
-bot.command("pin", ctx=>{
-    try{
+bot.command("pin", ctx => {
+    try {
         ctx.pinChatMessage(ctx.message.reply_to_message.message_id);
-    }catch(error){
+    } catch (error) {
         ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA PINEARLO, ANIMAL. 🤬");
     }
-    
+
 })
 
 //Unpin a message with a reply in the target
-bot.command("unpin", ctx=>{
-    try{
+bot.command("unpin", ctx => {
+    try {
         ctx.unpinChatMessage(ctx.message.reply_to_message.message_id);
-    }catch(error){
+    } catch (error) {
         ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA UNPINEARLO, ANIMAL. 🤬");
     }
 })
@@ -162,7 +164,7 @@ bot.command(["Chiste", "CHISTE", "chiste"], ctx => {
 })
 
 // This command ban  a member from group, use de kick function.
-bot.command(['kick','ban','palloby','pafuera'], ctx => {
+bot.command(['kick', 'ban', 'palloby', 'pafuera'], ctx => {
     ctx.getChatMember(ctx.message.from.id).then(res => {
         if (res.status == 'creator' || res.status == 'administrator') {
             kick(ctx);
@@ -173,29 +175,34 @@ bot.command(['kick','ban','palloby','pafuera'], ctx => {
     });
 })
 //Get heads or tails
-bot.command(["flipcoin", "coin","flip"], ctx =>{
+bot.command(["flipcoin", "coin", "flip"], ctx => {
     getFlip(ctx);
 })
 
 //call the got quote
-bot.command("GOT", (ctx)=>{
+bot.command("GOT", (ctx) => {
     getGOTquote(ctx);
 })
 
 //throws a quote from a random anime
-bot.command(["anime","ANIME","otaku","OTAKU"], ctx=>{
+bot.command(["anime", "ANIME", "otaku", "OTAKU"], ctx => {
     getAnimequote(ctx);
 })
 //Delete a message, just for admins.
-bot.command(["delete","borrao"], ctx=>{
+bot.command(["delete", "borrao"], ctx => {
     deleteMessage(ctx);
+})
+
+
+bot.command(["shiba", "shib"], ctx => {
+    getCrypto(ctx);
 })
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {
-	 quote = quotes[Object.keys(quotes)[Math.floor(Math.random()*Object.keys(quotes).length)]];
-	bot.telegram.sendMessage(-1001325613452, `“*${quote.text}*” - ${quote.author}`, {parse_mode: "Markdown"});
-}, 1000 * (3600 * 2)); 
+    quote = quotes[Object.keys(quotes)[Math.floor(Math.random() * Object.keys(quotes).length)]];
+    bot.telegram.sendMessage(-1001325613452, `“*${quote.text}*” - ${quote.author}`, { parse_mode: "Markdown" });
+}, 1000 * (3600 * 2));
 
 //launc the bot
 bot.launch();
