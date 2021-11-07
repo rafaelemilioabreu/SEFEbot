@@ -5,6 +5,7 @@ const require = createRequire(import.meta.url);
 //Importamos telegraf
 const { Telegraf } = require('telegraf');
 const quotes = require('./public/quotes.json');
+import { datos } from './public/info.js';
 import { conseguirInsultoEs, conseguirInsultoEn, 
     conseguirCumplido, conseguirChiste, getFlip, 
     getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage } from './public/functions.js';
@@ -17,40 +18,20 @@ const bot = new Telegraf(Token);
 
 //<----##################################################################        COMANDOS            ###############################################################---->
 
+
 //Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
-    if (ctx.from.first_name == "Lisandro") {
-        ctx.reply("Llego la para, llego la grasa");
-    } else if (ctx.from.first_name == "Dereck") {
-        ctx.reply("Bienvenido mi lider supremo");
-    } else if (ctx.from.first_name == "Marlon") {
-        ctx.reply
-            (`SE ACEPTAN TRANSFERENCIAS,
-            
-    Cédula: 402-0961415-1 Marlon Villalona
-
-    Banco: Asociación Popular de Ahorros y Préstamos
-    Cuenta de ahorros: 1023880512
-
-    -------------------------------------------
-
-    Banco: Popular
-    Cuenta corriente: 823359237
-
-    ----------------------------------------
-
-    Banco: Promerica 
-    Cuenta de ahorros: 11910200002107
-
-    ----------------------------------------
-
-    Binance Pay ID: 287625501`)
-    }
-    else {
-        ctx.reply(`Bienvenido ${ctx.from.first_name} ${ctx.from.last_name}`);
-    }
+    const {first_name, last_name} = ctx.from;
+    const {Bienvenida} = datos[first_name];
+    !Bienvenida ? ctx.reply(`Bienvenid@ ${first_name} ${last_name}`) : ctx.reply(Bienvenida);
+    
 });
-
+//Show BankAccount
+bot.command(["Deposito","Cuenta","cuenta","deposita","deposito"], ctx =>{
+    const {first_name} = ctx.from;
+    const {Cuenta} = datos[first_name];
+    !Cuenta ? ctx.reply(`Su cuenta no ha sido registrada en nuestro sistema...`):ctx.reply(Cuenta);
+})
 
 //Throws a message with the command list
 bot.help((ctx) => {
@@ -71,21 +52,23 @@ bot.command(['everyone', 'Everyone', 'All', 'ALL', 'all', 'toElMundazo', 'toelmu
 bot.command(['clasesNormales', 'clases', 'CLASES', 'Clases', 'Horario', 'horario', 'HORARIO'], ctx => {
     ctx.reply(`
     \n
-    \n⚜️              Horario de clases              ⚜️
-    \n#############################
+    \n⚜️           Horario de clases            ⚜️
+    \n___________________________________
     \n                              Lunes:
-    \n    Desarrollo Emprendedores. (7-9pm)
-    \n#############################
+    \n           Desarrollo Emprendedores. 
+    \n                              (7-9pm)
+    \n___________________________________
     \n                             Martes:        
-    \n        Programación Paralela. (8-10pm)
-    \n#############################
+    \n              Programación Paralela. 
+    \n                              (8-10pm)
+    \n___________________________________
     \n                            Miércoles:    
     \n                          IoT (6-10pm)
-    \n#############################
+    \n___________________________________
     \n                               Jueves:          
     \n         Ingeniería de Software. (6-8pm)
     \n                      DevOps (8-10pm)
-    \n#############################
+    \n___________________________________
     `)
 });
 
@@ -188,7 +171,7 @@ bot.command(["anime","ANIME","otaku","OTAKU"], ctx=>{
 })
 //Delete a message, just for admins.
 bot.command(["delete","borrao"], ctx=>{
-    deleteMessage(ctx);
+    deleteMessage(ctx)
 })
 //this function throws a Quote every 6 hours.
 let quote = null;
