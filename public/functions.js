@@ -34,9 +34,9 @@ const conseguirChiste = async (ctx) => {
         }
     };
     const info = await axios.request(payload);
-    const { setup, punchline, image } = info.data.body
-    const chisteText = `${setup} \n${punchline}`;
-    ctx.reply(`${setup}\n${punchline}. 🤡`)
+    const {setup, punchline, image} = info.data.body
+    const chisteText = `${setup} \n${punchline}.`;
+    ctx.reply(`${chisteText} 🤡`)
 }
 
 //throws tails or head, flip a coin.
@@ -89,7 +89,6 @@ const deleteMessage = ctx => {
     } else {
         ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA ELIMINARLO, ANIMAL. 🤬")
     }
-
 }
 
 //random quotes from Game Of Thrones
