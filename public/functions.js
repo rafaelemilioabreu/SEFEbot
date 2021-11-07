@@ -3,14 +3,14 @@ import axios from 'axios';
 //<----##################################################################        FUNCIONES            ###############################################################---->
 
 //This one, get de Insult from an api in Spanish
-async function conseguirInsultoEs(ctx){
+async function conseguirInsultoEs(ctx) {
     axios.get("https://evilinsult.com/generate_insult.php?lang=es&type=json")
         .then(res => ctx.reply(`${res.data.insult.toUpperCase()} 🤬`))
         .catch(err => console.log(err));
 }
 
 //This one, get de Insult from an api in English
-async function conseguirInsultoEn(ctx){
+async function conseguirInsultoEn(ctx) {
     axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
         .then(res => ctx.reply(`${res.data.insult.toUpperCase()} 🤬`))
         .catch(err => console.log(err));
@@ -26,15 +26,15 @@ const conseguirCumplido = (ctx) => {
 //This one, get a bad joke
 const conseguirChiste = async (ctx) => {
     const payload = {
-		method : 'GET',
-		url : 'https://dad-jokes.p.rapidapi.com/random/joke/png',
-		headers : {
-			'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
+        method: 'GET',
+        url: 'https://dad-jokes.p.rapidapi.com/random/joke/png',
+        headers: {
+            'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
             'x-rapidapi-host': 'dad-jokes.p.rapidapi.com'
-		}
-	};
+        }
+    };
     const info = await axios.request(payload);
-    const {setup, punchline, image} = info.data.body
+    const { setup, punchline, image } = info.data.body
     const chisteText = `${setup} \n${punchline}`;
     ctx.reply(`${setup}\n${punchline}. 🤡`)
 }
@@ -42,16 +42,16 @@ const conseguirChiste = async (ctx) => {
 //throws tails or head, flip a coin.
 const getFlip = async (ctx) => {
     const configuracion = {
-		method : 'GET',
-		url : 'https://coin-flip1.p.rapidapi.com/headstails',
-		headers : {
-			'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
+        method: 'GET',
+        url: 'https://coin-flip1.p.rapidapi.com/headstails',
+        headers: {
+            'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251',
             'x-rapidapi-host': 'coin-flip1.p.rapidapi.com'
-		}
-	};
+        }
+    };
     const info = await axios.request(configuracion);
-    const {outcome} = info.data
-    const coinText = `La moneda ha caído en: ${outcome=="Heads"?"Cara.":"Cruz."}`;
+    const { outcome } = info.data
+    const coinText = `La moneda ha caído en: ${outcome == "Heads" ? "Cara." : "Cruz."}`;
     ctx.reply(coinText);
 }
 
@@ -67,53 +67,66 @@ async function kick(ctx) {
     for (let i = 3; i > 0; i--) {
         await ctx.reply(`${i}`);
     }
-    try{
+    try {
         await ctx.kickChatMember(ctx.message.reply_to_message.from.id)
-    }catch(error){
+    } catch (error) {
         ctx.reply("ERROR");
     }
-    
+
 }
 
 //delete message, just for admins.
-const deleteMessage = ctx =>{
-    if(ctx.message.reply_to_message){
-        ctx.getChatMember(ctx.message.from.id).then(res =>{
-            if(res.status =="creator" || res.status =="administrator" || ctx.message.chat.type =="private"){
+const deleteMessage = ctx => {
+    if (ctx.message.reply_to_message) {
+        ctx.getChatMember(ctx.message.from.id).then(res => {
+            if (res.status == "creator" || res.status == "administrator" || ctx.message.chat.type == "private") {
                 ctx.deleteMessage(ctx.message.reply_to_message.message_id)
                 ctx.deleteMessage(ctx.message.message_id);
-            }else{
+            } else {
                 ctx.reply("Te falta calle 😈");
             }
         })
-    }else{
+    } else {
         ctx.reply("MAMAÑEMA, DEBES RESPONDER UN MENSAJE PARA ELIMINARLO, ANIMAL. 🤬")
     }
-    
+
 }
 
 //random quotes from Game Of Thrones
-const getGOTquote = async (ctx) =>{
+const getGOTquote = async (ctx) => {
     const configuracion = {
-		method : 'GET',
-		url : 'https://game-of-thrones-quotes.herokuapp.com/v1/random'
-	};
+        method: 'GET',
+        url: 'https://game-of-thrones-quotes.herokuapp.com/v1/random'
+    };
     const info = await axios.request(configuracion);
-    const {sentence, character} = info.data
-    const {name} = character
+    const { sentence, character } = info.data
+    const { name } = character
     const Text = `"${sentence}"\n~ ${name} ❄️`;
-    ctx.reply(Text);    
+    ctx.reply(Text);
 }
 
 //random quotes from anime
-const getAnimequote = async (ctx) =>{
+const getAnimequote = async (ctx) => {
     const configuracion = {
-		method : 'GET',
-		url : 'https://animechan.vercel.app/api/random'
-	};
+        method: 'GET',
+        url: 'https://animechan.vercel.app/api/random'
+    };
     const info = await axios.request(configuracion);
-    const {anime,quote, character} = info.data
+    const { anime, quote, character } = info.data
     const Text = `"${quote}"\n\n⛩️ ${character} from ${anime} ⛩️`;
-    ctx.reply(Text);    
+    ctx.reply(Text);
 }
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage };
+
+const getCrypto = async (ctx) => {
+    const config = {
+        method: 'GET',
+        url: 'https://api.coingecko.com/api/v3/simple/price?ids=shiba-inu&vs_currencies=usd'
+    }
+    const info = await axios.request(config);
+    const { data } = info;
+    const { usd } = data['shiba-inu'];
+    ctx.reply("El precio de shiba es de: " + usd + "$ 🐐")
+}
+
+
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto };
