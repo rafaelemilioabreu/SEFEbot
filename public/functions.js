@@ -145,10 +145,16 @@ const imageSearch = async (ctx) =>{
         'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251'
     }
     };
-
-    const info =  await axios.request(options);
-    const { contentUrl, name } = info.data.value[0];
-    ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`});
+    try{
+        const info =  await axios.request(options);
+        const { contentUrl, name } = info.data.value[0];
+        ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`}).catch(res=>{
+            res.response.error_code == 400? ctx.reply("La url proporcionada no funciona, pruebe con otro término"):ctx.reply(res.response.description);
+        });
+    }catch{
+        ctx.replyWithPhoto("No encontré ese término");
+    }
+    
 }
 //Links
 const linkparalela = async (ctx) =>{
