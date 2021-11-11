@@ -11,7 +11,7 @@ import {
     conseguirCumplido, conseguirChiste, getFlip,
     getRandomArbitrary, kick, getGOTquote, getAnimequote, 
     deleteMessage, getCrypto,linkparalela, linkingenieria,
-    imageSearch
+    imageSearch, linkDesarrollo
 } from './public/functions.js';
 //Definimos Token de nuestro Bot
 const Token = '2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg';
@@ -137,6 +137,11 @@ bot.action('ingenieria',(ctx) => {
     ctx.answerCbQuery();
     ctx.deleteMessage(ctx.callbackQuery.message.message_id)
     linkingenieria(ctx);
+});
+bot.action('desarrollo',(ctx) => {
+    ctx.answerCbQuery();
+    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
+    linkDesarrollo(ctx);
 });
 //Define an action for the options
 bot.action('volver',(ctx) => {

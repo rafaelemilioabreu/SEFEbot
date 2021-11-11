@@ -148,7 +148,8 @@ const imageSearch = async (ctx) =>{
     try{
         const info =  await axios.request(options);
         const { contentUrl, name } = info.data.value[0];
-        ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`}).catch(res=>{
+        ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`})
+        .catch(res=>{
             res.response.error_code == 400? ctx.reply("La url proporcionada no funciona, pruebe con otro término"):ctx.reply(res.response.description);
         });
     }catch{
@@ -163,4 +164,7 @@ const linkparalela = async (ctx) =>{
 const linkingenieria = async (ctx) =>{
     ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
 }
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria, imageSearch };
+const linkDesarrollo = (ctx)=>{
+    ctx.reply("El link de la clase Desarrollo de emprendedores es: meet.google.com/pgu-xaxd-qke");
+}
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria, imageSearch, linkDesarrollo };
