@@ -150,56 +150,37 @@ const imageSearch = async (ctx) => {
     url: "https://bing-image-search1.p.rapidapi.com/images/search",
     params: { q: message },
     headers: {
-      "x-rapidapi-host": "bing-image-search1.p.rapidapi.com",
-      "x-rapidapi-key": "714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251",
-    },
-  };
-  try {
-    const info = await axios.request(options);
-    const { contentUrl, name } = info.data.value[0];
-    ctx
-      .replyWithPhoto(contentUrl, {
-        caption: `[🔭] He encontrado esta imagen:\n\n${name}`,
-      })
-      .catch((res) => {
-        res.response.error_code == 400
-          ? ctx.reply(
-              "La url proporcionada no funciona, pruebe con otro término"
-            )
-          : ctx.reply(res.response.description);
-      });
-  } catch {
-    ctx.replyWithPhoto("No encontré ese término");
-  }
-};
+        'x-rapidapi-host': 'bing-image-search1.p.rapidapi.com',
+        'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251'
+    }
+    };
+    try{
+        const info =  await axios.request(options);
+        const { contentUrl, name } = info.data.value[0];
+        ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`})
+        .catch(res=>{
+            res.response.error_code == 400? ctx.reply("La url proporcionada no funciona, pruebe con otro término"):ctx.reply(res.response.description);
+        });
+    }catch{
+        ctx.replyWithPhoto("No encontré ese término");
+    }
+    
+}
 //Links
-const linkparalela = async (ctx) => {
-  ctx.reply(
-    "El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0"
-  );
-};
-const linkingenieria = async (ctx) => {
-  ctx.reply(
-    "El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn"
-  );
-};
+const linkparalela = async (ctx) =>{
+    ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
+}
+const linkingenieria = async (ctx) =>{
+    ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
+}
+const linkDesarrollo = (ctx)=>{
+    ctx.reply("El link de la clase Desarrollo de emprendedores es: meet.google.com/pgu-xaxd-qke");
+}
 const linkIoT = async (ctx) => {
   ctx.reply("El link de la clase IoT es: https://meet.google.com/stt-vykr-sbw");
 };
-export {
-  conseguirInsultoEs,
-  conseguirInsultoEn,
-  conseguirCumplido,
-  conseguirChiste,
-  getFlip,
-  getRandomArbitrary,
-  kick,
-  getGOTquote,
-  getAnimequote,
-  deleteMessage,
-  getCrypto,
-  linkparalela,
-  linkingenieria,
-  imageSearch,
-  linkIoT,
-};
+
+
+export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria, imageSearch, linkDesarrollo, linkIoT };
+     
+

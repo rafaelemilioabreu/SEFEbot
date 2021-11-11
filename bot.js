@@ -6,6 +6,7 @@ const { Telegraf } = require("telegraf");
 const quotes = require("./public/quotes.json");
 import { datos } from "./public/info.js";
 import {
+  linkDesarrollo,
   conseguirInsultoEs,
   conseguirInsultoEn,
   conseguirCumplido,
@@ -202,6 +203,11 @@ bot.action("ingenieria", (ctx) => {
   ctx.answerCbQuery();
   ctx.deleteMessage(ctx.callbackQuery.message.message_id);
   linkingenieria(ctx);
+});
+bot.action('desarrollo',(ctx) => {
+    ctx.answerCbQuery();
+    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
+    linkDesarrollo(ctx);
 });
 //Define an action for the options
 bot.action("volver", (ctx) => {
