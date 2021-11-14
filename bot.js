@@ -1,8 +1,10 @@
 //Permite importar y usar require. Se especifica "type":"module" en el package.json
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-//Importamos telegraf
-const { Telegraf } = require("telegraf");
+// //Importamos telegraf
+
+const {Composer} = require('micro-bot');
+// const { Telegraf } = require("telegraf");
 const quotes = require("./public/quotes.json");
 import { datos } from "./public/info.js";
 import {
@@ -149,18 +151,6 @@ bot.command(["DiseloTuBot", "diselotubot", "DISELOTUBOT", "diselo"], (ctx) => {
     ctx.reply("Se la bebieron toito. 😈");
   }
 });
-
-// ////gets the Parallel programming link
-// bot.command(["linkParalela", "LinkParalela", "linkparalela", "LINKPARALELA", "Linkparalela"], ctx => {
-//     linkparalela(ctx);
-//     ctx.deleteMessage(ctx.message.message_id);
-// })
-
-// //gets the Software Engineering link
-// bot.command(["linkIngenieria", "LinkIngenieria", "linkingenieria", "LINKINGENIERIA", "linkEvanyeline", "LinkEvanyeline", "linkevanyeline", "LINKEVANYELINE", "linkevangelion", "linkEvangelion", "LinkEvangelion"], ctx => {
-//     linkingenieria(ctx);
-//     ctx.deleteMessage(ctx.message.message_id);
-// })
 
 //It's supossed to be, a menu with the links of the classes
 bot.command("links", (ctx) => {
