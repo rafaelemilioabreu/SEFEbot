@@ -34,6 +34,7 @@ const bot = new Telegraf(Token);
 //Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
   const { first_name, last_name } = ctx.from;
+  console.log(first_name);
   const { Bienvenida } = datos[first_name];
   !Bienvenida
     ? ctx.reply(`Bienvenid@ ${first_name} ${last_name}`)
@@ -296,12 +297,7 @@ bot.command(["image", "img", "search"], (ctx) => {
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {
-  quote =
-    quotes[
-      Object.keys(quotes)[
-        Math.floor(Math.random() * Object.keys(quotes).length)
-      ]
-    ];
+  quote = quotes[Object.keys(quotes)[Math.floor(Math.random() * Object.keys(quotes).length)]];
   bot.telegram.sendMessage(
     -1001325613452,
     `“*${quote.text}*” - ${quote.author}`,
