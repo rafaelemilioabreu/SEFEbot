@@ -40,9 +40,8 @@ const datos = {
   },
   Jenrry: {},
   Eduardo: {},
-  Rafael: {
-    Bienvenida:
-      "La para, la bestia, el animal, di best, crack, maquina, fiera, jefe, tifón, numero 1, figura, mostro, mastodonte, toro, furia, ciclón, tornado, artista, fenómeno, campeón, maestro, torero, socio, itz el Rafaaaaa",
+  "Rafael Emilio": {
+    Bienvenida: "La para, la bestia, el animal, di best, crack, maquina, fiera, jefe, tifón, numero 1, figura, mostro, mastodonte, toro, furia, ciclón, tornado, artista, fenómeno, campeón, maestro, torero, socio, itz el Rafaaaaa",
     HBD: "06/03/2002",
     Cuenta: `Rafael Emilio Abreu
         \nBanco: Popular
