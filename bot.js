@@ -1,10 +1,8 @@
 //Permite importar y usar require. Se especifica "type":"module" en el package.json
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-// //Importamos telegraf
-
-const {Composer} = require('micro-bot');
-// const { Telegraf } = require("telegraf");
+//Importamos telegraf
+const { Telegraf } = require("telegraf");
 const quotes = require("./public/quotes.json");
 import { datos } from "./public/info.js";
 import {
@@ -36,7 +34,6 @@ const bot = new Telegraf(Token);
 //Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
   const { first_name, last_name } = ctx.from;
-  console.log(first_name);
   const { Bienvenida } = datos[first_name];
   !Bienvenida
     ? ctx.reply(`Bienvenid@ ${first_name} ${last_name}`)
