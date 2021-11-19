@@ -22,7 +22,11 @@ import {
   linkingenieria,
   linkIoT,
   imageSearch,
+  getNews,
+  getTechNews,
+  getEntertaimentNews,
 } from "./public/functions.js";
+import { time } from "console";
 //Definimos Token de nuestro Bot
 const Token = "2074747800:AAGlVnEtQLdWQ5FkfzhBlftJD_78EzuAgIg";
 
@@ -192,10 +196,10 @@ bot.action("ingenieria", (ctx) => {
   ctx.deleteMessage(ctx.callbackQuery.message.message_id);
   linkingenieria(ctx);
 });
-bot.action('desarrollo',(ctx) => {
-    ctx.answerCbQuery();
-    ctx.deleteMessage(ctx.callbackQuery.message.message_id)
-    linkDesarrollo(ctx);
+bot.action("desarrollo", (ctx) => {
+  ctx.answerCbQuery();
+  ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  linkDesarrollo(ctx);
 });
 //Define an action for the options
 bot.action("volver", (ctx) => {
@@ -276,6 +280,16 @@ bot.command(["shiba", "shib"], (ctx) => {
   getCrypto(ctx);
 });
 
+bot.command(["news", "noticias"], (ctx) => {
+  getNews(ctx);
+});
+bot.command(["technews", "tecnologia"], (ctx) => {
+  getTechNews(ctx);
+});
+bot.command(["entertaimentnews", "entretenimiento"], (ctx) => {
+  getEntertaimentNews(ctx);
+});
+
 bot.command(["image", "img", "search"], (ctx) => {
   imageSearch(ctx);
   // bot.telegram.sendMessage(ctx.message.chat.id, image);
@@ -284,13 +298,23 @@ bot.command(["image", "img", "search"], (ctx) => {
 //this function throws a Quote every 6 hours.
 let quote = null;
 setInterval(() => {
-  quote = quotes[Object.keys(quotes)[Math.floor(Math.random() * Object.keys(quotes).length)]];
+  quote =
+    quotes[
+      Object.keys(quotes)[
+        Math.floor(Math.random() * Object.keys(quotes).length)
+      ]
+    ];
   bot.telegram.sendMessage(
     -1001325613452,
     `“*${quote.text}*” - ${quote.author}`,
     { parse_mode: "Markdown" }
   );
 }, 1000 * (3600 * 2));
+
+//working on it
+// setInterval((ctx) => {
+//   bot.telegram.sendMessage(-1001325613452, getNews());
+// }, 36000);
 
 //launc the bot
 bot.launch();
