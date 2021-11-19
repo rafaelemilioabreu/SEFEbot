@@ -135,6 +135,66 @@ const getCrypto = async (ctx) => {
   const { usd } = data["shiba-inu"];
   ctx.reply("El precio de shiba es de: " + usd + "$ 🐐");
 };
+const getNews = async (ctx) => {
+  const config = {
+    method: "GET",
+    url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=5cb16edbf1f043a39185035d1e1a43f0",
+  };
+  const info = await axios.request(config);
+
+  const news = info.data.articles[0].title;
+  const imgurl = info.data.articles[0].urlToImage;
+
+  ctx
+    .replyWithPhoto(imgurl, {
+      caption: news,
+    })
+    .catch((res) => {
+      res.response.error_code == 400
+        ? ctx.reply("No se encontro imagen, la noticia es: " + news)
+        : ctx.reply(res.response.description);
+    });
+};
+const getTechNews = async (ctx) => {
+  const config = {
+    method: "GET",
+    url: "https://newsapi.org/v2/top-headlines?country=de&category=technology&apiKey=5cb16edbf1f043a39185035d1e1a43f0",
+  };
+  const info = await axios.request(config);
+
+  const news = info.data.articles[0].title;
+  const imgurl = info.data.articles[0].urlToImage;
+
+  ctx
+    .replyWithPhoto(imgurl, {
+      caption: news,
+    })
+    .catch((res) => {
+      res.response.error_code == 400
+        ? ctx.reply("No se encontro imagen, la noticia es: " + news)
+        : ctx.reply(res.response.description);
+    });
+};
+const getEntertaimentNews = async (ctx) => {
+  const config = {
+    method: "GET",
+    url: "https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=5cb16edbf1f043a39185035d1e1a43f0",
+  };
+  const info = await axios.request(config);
+
+  const news = info.data.articles[0].title;
+  const imgurl = info.data.articles[0].urlToImage;
+
+  ctx
+    .replyWithPhoto(imgurl, {
+      caption: news,
+    })
+    .catch((res) => {
+      res.response.error_code == 400
+        ? ctx.reply("No se encontro imagen, la noticia es: " + news)
+        : ctx.reply(res.response.description);
+    });
+};
 
 //Look an image from the request value
 const imageSearch = async (ctx) => {
@@ -150,37 +210,66 @@ const imageSearch = async (ctx) => {
     url: "https://bing-image-search1.p.rapidapi.com/images/search",
     params: { q: message },
     headers: {
-        'x-rapidapi-host': 'bing-image-search1.p.rapidapi.com',
-        'x-rapidapi-key': '714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251'
-    }
-    };
-    try{
-        const info =  await axios.request(options);
-        const { contentUrl, name } = info.data.value[0];
-        ctx.replyWithPhoto(contentUrl, {caption: `[🔭] He encontrado esta imagen:\n\n${name}`})
-        .catch(res=>{
-            res.response.error_code == 400? ctx.reply("La url proporcionada no funciona, pruebe con otro término"):ctx.reply(res.response.description);
-        });
-    }catch{
-        ctx.replyWithPhoto("No encontré ese término");
-    }
-    
-}
+      "x-rapidapi-host": "bing-image-search1.p.rapidapi.com",
+      "x-rapidapi-key": "714960d542msh31c5ebef0587ad3p137c5djsnefd7172a4251",
+    },
+  };
+  try {
+    const info = await axios.request(options);
+    const { contentUrl, name } = info.data.value[0];
+    ctx
+      .replyWithPhoto(contentUrl, {
+        caption: `[🔭] He encontrado esta imagen:\n\n${name}`,
+      })
+      .catch((res) => {
+        res.response.error_code == 400
+          ? ctx.reply(
+              "La url proporcionada no funciona, pruebe con otro término"
+            )
+          : ctx.reply(res.response.description);
+      });
+  } catch {
+    ctx.replyWithPhoto("No encontré ese término");
+  }
+};
 //Links
-const linkparalela = async (ctx) =>{
-    ctx.reply("El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0");
-}
-const linkingenieria = async (ctx) =>{
-    ctx.reply("El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn");
-}
-const linkDesarrollo = (ctx)=>{
-    ctx.reply("El link de la clase Desarrollo de emprendedores es: meet.google.com/pgu-xaxd-qke");
-}
+const linkparalela = async (ctx) => {
+  ctx.reply(
+    "El link de la clase programación paralela es: https://meet.google.com/gcs-jwgg-tch?authuser=0"
+  );
+};
+const linkingenieria = async (ctx) => {
+  ctx.reply(
+    "El link de la clase Ingeniería de Software es: https://meet.google.com/asr-jzyw-hmn"
+  );
+};
+const linkDesarrollo = (ctx) => {
+  ctx.reply(
+    "El link de la clase Desarrollo de emprendedores es: meet.google.com/pgu-xaxd-qke"
+  );
+};
 const linkIoT = async (ctx) => {
   ctx.reply("El link de la clase IoT es: https://meet.google.com/stt-vykr-sbw");
 };
 
-
-export { conseguirInsultoEs, conseguirInsultoEn, conseguirCumplido, conseguirChiste, getFlip, getRandomArbitrary, kick, getGOTquote, getAnimequote, deleteMessage, getCrypto, linkparalela,linkingenieria, imageSearch, linkDesarrollo, linkIoT };
-     
-
+export {
+  conseguirInsultoEs,
+  conseguirInsultoEn,
+  conseguirCumplido,
+  conseguirChiste,
+  getFlip,
+  getRandomArbitrary,
+  kick,
+  getGOTquote,
+  getAnimequote,
+  deleteMessage,
+  getCrypto,
+  linkparalela,
+  linkingenieria,
+  imageSearch,
+  linkDesarrollo,
+  linkIoT,
+  getNews,
+  getTechNews,
+  getEntertaimentNews,
+};
