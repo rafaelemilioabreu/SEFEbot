@@ -158,7 +158,7 @@ const getNews = async (ctx) => {
 const getTechNews = async (ctx) => {
   const config = {
     method: "GET",
-    url: "https://newsapi.org/v2/top-headlines?country=de&category=technology&apiKey=5cb16edbf1f043a39185035d1e1a43f0",
+    url: "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=5cb16edbf1f043a39185035d1e1a43f0",
   };
   const info = await axios.request(config);
 
