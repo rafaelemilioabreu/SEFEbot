@@ -54,9 +54,8 @@ const getFlip = async (ctx) => {
   };
   const info = await axios.request(configuracion);
   const { outcome } = info.data;
-  const coinText = `La moneda ha caído en: ${
-    outcome == "Heads" ? "Cara." : "Cruz."
-  }`;
+  const coinText = `La moneda ha caído en: ${outcome == "Heads" ? "Cara." : "Cruz."
+    }`;
   ctx.reply(coinText);
 };
 
@@ -72,7 +71,12 @@ async function kick(ctx) {
     await ctx.reply(`${i}`);
   }
   try {
-    await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
+    if (ctx.message.reply_to_message.from.first_name !== "Lisandro") {
+      await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
+    }
+    else {
+      await ctx.reply("No compai que se le bugea tg desktop");
+    }
   } catch (error) {
     ctx.reply("ERROR");
   }
@@ -224,8 +228,8 @@ const imageSearch = async (ctx) => {
       .catch((res) => {
         res.response.error_code == 400
           ? ctx.reply(
-              "La url proporcionada no funciona, pruebe con otro término"
-            )
+            "La url proporcionada no funciona, pruebe con otro término"
+          )
           : ctx.reply(res.response.description);
       });
   } catch {

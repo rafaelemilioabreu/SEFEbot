@@ -37,6 +37,7 @@ const bot = new Telegraf(Token);
 
 //Say something custom by a person. (Beta Version of this command)
 bot.start((ctx) => {
+  console.log(ctx.message.reply_to_message.from);
   const { first_name, last_name } = ctx.from;
   const { Bienvenida } = datos[first_name];
   !Bienvenida
@@ -300,9 +301,9 @@ let quote = null;
 setInterval(() => {
   quote =
     quotes[
-      Object.keys(quotes)[
-        Math.floor(Math.random() * Object.keys(quotes).length)
-      ]
+    Object.keys(quotes)[
+    Math.floor(Math.random() * Object.keys(quotes).length)
+    ]
     ];
   bot.telegram.sendMessage(
     -1001325613452,
