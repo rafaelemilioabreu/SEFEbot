@@ -11,6 +11,11 @@ const datos = {
   Lisandro: {
     Bienvenida: "Llego la para, llego la grasa",
     HBD: "06/05/2002",
+    Cuenta: `Lisandro Mora Perez
+        \nCédula: 402-2925285-9
+        \nBanco: Banco BHD Leon
+        \nCuenta: 30662190012
+        \nTipo: Cuenta de Ahorro`,
   },
   Ian: {
     Bienvenida:
