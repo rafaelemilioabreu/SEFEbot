@@ -72,12 +72,10 @@ async function kick(ctx) {
   }
   
   try {
-    if (ctx.message.reply_to_message.from.first_name !== "Lisandro") {
+    
       await ctx.kickChatMember(ctx.message.reply_to_message.from.id);
-    }
-    else {
-      await ctx.reply("No compai que se le bugea tg desktop");
-    }
+   
+   
   } catch (error) {
     ctx.reply("ERROR");
   }
