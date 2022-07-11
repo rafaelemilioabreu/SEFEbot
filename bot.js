@@ -252,6 +252,7 @@ bot.command(["Chiste", "CHISTE", "chiste"], (ctx) => {
 bot.command(["kick", "ban", "palloby", "pafuera"], (ctx) => {
   ctx.getChatMember(ctx.message.from.id).then((res) => {
     if (res.status == "creator" || res.status == "administrator"  || res.user.first_name == "Rafael Emilio") {
+      console.log(ctx);
       kick(ctx);
     } else {
       ctx.reply("Te falta calle 😈");
