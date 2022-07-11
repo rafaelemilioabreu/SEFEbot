@@ -70,6 +70,7 @@ async function kick(ctx) {
   for (let i = 3; i > 0; i--) {
     await ctx.reply(`${i}`);
   }
+  
   try {
     if (ctx.message.reply_to_message.from.first_name !== "Lisandro") {
       await ctx.kickChatMember(ctx.message.reply_to_message.from.id);

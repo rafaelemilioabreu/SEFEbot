@@ -251,7 +251,7 @@ bot.command(["Chiste", "CHISTE", "chiste"], (ctx) => {
 // This command ban  a member from group, use de kick function.
 bot.command(["kick", "ban", "palloby", "pafuera"], (ctx) => {
   ctx.getChatMember(ctx.message.from.id).then((res) => {
-    if (res.status == "creator" || res.status == "administrator") {
+    if (res.status == "creator" || res.status == "administrator"  || res.user.first_name == "Rafael Emilio") {
       kick(ctx);
     } else {
       ctx.reply("Te falta calle 😈");
@@ -311,6 +311,8 @@ setInterval(() => {
     { parse_mode: "Markdown" }
   );
 }, 1000 * (3600 * 2));
+
+
 
 //working on it
 // setInterval((ctx) => {
