@@ -311,7 +311,7 @@ setInterval(() => {
     `“*${quote.text}*” - ${quote.author}`,
     { parse_mode: "Markdown" }
   );
-}, 1000 * (3600 * 2));
+}, 1000 * (3600 * 6));
 
 
 
